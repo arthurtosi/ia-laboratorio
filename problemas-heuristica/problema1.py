@@ -40,7 +40,6 @@ def get_neighbor(costs: np.ndarray) -> np.ndarray:
         new[r] += change
 
         if (verify_constraints(new)): return new
-    
 def annealing():
     current = np.array([0,0,0,0])
     best = current
