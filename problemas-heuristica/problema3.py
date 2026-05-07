@@ -18,7 +18,7 @@ def get_neighbor(X, Temp):
     while True:
         new = np.copy(X)
         index = np.random.randint(0, DIMENSAO)
-        change = np.random.uniform(-1,1) * Temp / MAX_TEMP
+        change = np.random.uniform(-1,1) * Temp / 10
         new[index] += change
         
         # Tinha feito: 
@@ -45,9 +45,11 @@ def annealing(restarts = 10):
             
             if (delta > 0):
                 current = np.copy(candidate)
+                current_func = candidate_func
             else:
-                if (np.random.uniform(0,100) < np.exp(delta / T)):
+                if (np.random.random() < np.exp(delta / T)):
                     current = np.copy(candidate)
+                    current_func = candidate_func
             
             if (func(best) > current_func):
                 best = np.copy(current)
@@ -60,12 +62,9 @@ def annealing(restarts = 10):
     return best_global
 
 if __name__ == "__main__":
-    result = annealing()
+    result = annealing(restarts=20)
     print(f"Resultado = {result}")
     print(f"f(x) = {func(result)}")
     print(f"Dentro do intervalo = {verify_constraints(result)}")
     print(f"Menor valor do vetor = {np.min(result)}")
     print(f"Maior valor do vetor = {np.max(result)}")
-    
-    
-    
