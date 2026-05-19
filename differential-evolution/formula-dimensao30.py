@@ -2,9 +2,9 @@ import numpy as np
 
 DIMENSAO = 30
 N_INDIVIDUOS = 1000
-EPOCAS = 50
-TAXA_CRUZAMENTO = 0.9 #Chance de selecionar o gene mutado
-F = 0.8
+EPOCAS = 500
+TAXA_CRUZAMENTO = 0.5 #Chance de selecionar o gene mutado
+F = 0.4
 
 def func(individuo: np.ndarray) -> float:
     n = len(individuo)
