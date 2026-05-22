@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 DIMENSAO = 30
 N_INDIVIDUOS = 50
@@ -54,18 +55,25 @@ def differential_evolution():
     populacao = np.random.uniform(low=-32, high=32, size=(N_INDIVIDUOS, DIMENSAO))
     historico_fitness = []
     
-    for _ in range(EPOCAS):
-        # MUTACAO
-        pop_mutada = mutacao(populacao)
-        
-        # CROSSOVER
-        pop_teste = crossover(populacao, pop_mutada)
-        
-        # SELEÇÃO
-        populacao = selecao(populacao, pop_teste)
-        
-        resultados = np.apply_along_axis(func, 1, populacao)
-        historico_fitness.append(np.min(resultados))
+    with tqdm(total=EPOCAS, desc="Otimizando") as pbar:
+    
+        for _ in range(EPOCAS):
+            # MUTACAO
+            pop_mutada = mutacao(populacao)
+            
+            # CROSSOVER
+            pop_teste = crossover(populacao, pop_mutada)
+            
+            # SELEÇÃO
+            populacao = selecao(populacao, pop_teste)
+            
+            resultados = np.apply_along_axis(func, 1, populacao)
+            melhor_atual = np.min(resultados)
+            historico_fitness.append(np.min(resultados))
+            
+            pbar.update(1)
+            # Coloca ao lado da barra o melhor atual
+            pbar.set_postfix({'Melhor Fitness': f'{melhor_atual:.5f}'})
     
     # resultados = [func(idx) for idx in populacao]
     melhor_idx = np.argmin(resultados)
@@ -76,6 +84,7 @@ def differential_evolution():
         
         
 if __name__ == "__main__":
+    
     melhor, historico = differential_evolution()
 
     plt.plot(historico)
