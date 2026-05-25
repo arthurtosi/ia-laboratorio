@@ -84,6 +84,7 @@ N_INDIVIDUOS = 100
 
 
 if __name__ == "__main__":
+
     pso = PSO((LIM_INFERIOR, LIM_SUPERIOR), fitness, coeficiente_inercia=0.4, n_individuos=N_INDIVIDUOS)
     melhor, historico = pso.otimiza(EPOCAS)
     
@@ -92,6 +93,4 @@ if __name__ == "__main__":
     plt.plot(historico)
     plt.grid(True)
     plt.title("Evolução do Fitness")
-    plt.xlabel("Épocas")
-    plt.ylabel("Fitness")
     plt.show()
